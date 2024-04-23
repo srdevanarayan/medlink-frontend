@@ -1,103 +1,12 @@
 import Web3 from "web3";
 import { useState } from "react";
 
-const ADDRESS = "0xd34ff8CC35A78a2B192eb7b35D7318070b2f13DD";
-const ABI = [
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: true,
-        internalType: "address",
-        name: "user",
-        type: "address",
-      },
-      {
-        indexed: false,
-        internalType: "string",
-        name: "newStatus",
-        type: "string",
-      },
-    ],
-    name: "RegistrationStatusChanged",
-    type: "event",
-  },
-  {
-    inputs: [
-      {
-        internalType: "string",
-        name: "_name",
-        type: "string",
-      },
-      {
-        internalType: "string",
-        name: "_dob",
-        type: "string",
-      },
-      {
-        internalType: "string",
-        name: "_place",
-        type: "string",
-      },
-      {
-        internalType: "string",
-        name: "_sex",
-        type: "string",
-      },
-      {
-        internalType: "uint256",
-        name: "_aadhaarNumber",
-        type: "uint256",
-      },
-    ],
-    name: "register",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "getUnverifiedAddresses",
-    outputs: [
-      {
-        internalType: "address[]",
-        name: "",
-        type: "address[]",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-    constant: true,
-  },
-  {
-    inputs: [
-      {
-        internalType: "address",
-        name: "_user",
-        type: "address",
-      },
-    ],
-    name: "verifyRegistration",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "address",
-        name: "_user",
-        type: "address",
-      },
-    ],
-    name: "rejectRegistration",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-];
 
-export async function loadBlockchain() {
+
+
+export async function loadBlockchain(){
+
+  //get reference of web3 from ganache
   const web3 = new Web3(Web3.givenProvider || "http://localhost:7545", null, {
     vmErrorsOptions: {
       onVmError: (error) => {
@@ -108,9 +17,10 @@ export async function loadBlockchain() {
   });
   const accounts = await web3.eth.getAccounts();
 
-  console.log({ accounts });
-  const _registrations = new web3.eth.Contract(ABI, ADDRESS);
-  return { contract: _registrations, accounts: accounts };
+  console.log({accounts})
+  //const _registrations = new web3.eth.Contract(ABI, ADDRESS);
+  const _registration=null;
+  return { web3:web3,contract: _registration, accounts: null };
 }
 
 // export async function register(contract, account, details) {
