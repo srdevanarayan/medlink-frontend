@@ -19,7 +19,7 @@ export async function createAccount(web3){
         privateKey:tempAccount.privateKey,
         adresss:tempAccount.address,
     }
-    console.log({retrivedAccount})
+    console.log({retrivedAccount,account})
     const accounts = await web3.eth.getAccounts();
    // const transfer=await web3.eth.sendTransaction({to:retrivedAccount.address, from:accounts[0], value:web3.utils.toWei("10.0", "ether")});
     
@@ -35,7 +35,7 @@ export async function checkIfUserAlreadyExists(userName,web3,accountInfo){
     const ABI=MASTER_LIST_ABI;
 
     const validAcount = new web3.eth.Contract(ABI, ADDRESS);
-    console.log("before transaction",{ADDRESS,ABI,validAcount},validAcount.methods)
+    console.log("before transaction",{ADDRESS,ABI,validAcount,accountInfo},validAcount.methods)
 
     const balance=await web3.eth.getBalance(accountInfo.address)
     console.log({accountInfo},accountInfo.address,balance);

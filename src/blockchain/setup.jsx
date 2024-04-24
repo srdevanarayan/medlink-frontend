@@ -15,12 +15,26 @@ export async function loadBlockchain(){
       },
     },
   });
-  const accounts = await web3.eth.getAccounts();
+  
+  return web3;
+}
 
-  console.log({accounts})
-  //const _registrations = new web3.eth.Contract(ABI, ADDRESS);
-  const _registration=null;
-  return { web3:web3,contract: _registration, accounts: null };
+
+export async function fetchAccount(username,password,web3){
+
+  
+  // ############### Replace with fetc logic ########## just testing ######
+  const accounts=await web3.eth.getAccounts();
+
+  const type="";
+  const address=accounts[0].address;
+
+  const account={
+    type:type,
+    address:address
+  }
+
+  return account;
 }
 
 // export async function register(contract, account, details) {

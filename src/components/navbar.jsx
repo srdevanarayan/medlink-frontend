@@ -4,7 +4,7 @@ import { NavLink as Link } from "react-router-dom";
 import styled from "styled-components";
 import { Logo } from "../images/images";
 
-const Nav = styled.nav`
+export const Nav = styled.nav`
   background: #000;
   height: 5vh;
   min-height: 40px;
@@ -17,7 +17,7 @@ const Nav = styled.nav`
   /* justify-content: flex-start; */
 `;
 
-const NavLink = styled(Link)`
+export const NavLink = styled(Link)`
   color: #fff;
   display: flex;
   align-items: center;
@@ -31,7 +31,7 @@ const NavLink = styled(Link)`
   }
 `;
 
-const Bars = styled(FaBars)`
+export const Bars = styled(FaBars)`
   display: none;
   color: #fff;
 
@@ -46,7 +46,7 @@ const Bars = styled(FaBars)`
   }
 `;
 
-const NavMenu = styled.div`
+export const NavMenu = styled.div`
   display: flex;
   align-items: center;
   margin-right: -24px;
@@ -63,7 +63,7 @@ const NavMenu = styled.div`
   }
 `;
 
-const NavBtn = styled.nav`
+export const NavBtn = styled.nav`
   display: flex;
   align-items: center;
   margin-right: 24px;
@@ -77,7 +77,7 @@ const NavBtn = styled.nav`
   }
 `;
 
-const NavBtnLink = styled(Link)`
+export const NavBtnLink = styled(Link)`
   border-radius: 4px;
   background: #256ce1;
   padding: 10px 22px;
@@ -98,7 +98,17 @@ const NavBtnLink = styled(Link)`
   }
 `;
 
-const Navbar = () => {
+const Navbar = ({options}) => {
+
+  const Links=options.map((option)=>{
+    if(option.type=="link"){
+      return <NavLink to={option.link}>{option.name}</NavLink>
+    }
+    else if(option.type=="button"){
+      return <NavBtnLink to={option.link}>{option.name}</NavBtnLink>
+    }
+  })
+  
   return (
     <>
       <Nav>
@@ -107,18 +117,9 @@ const Navbar = () => {
         </NavLink>
         <Bars />
         <NavMenu>
-          <NavLink to="/requests" activeStyle>
-            Requests
-          </NavLink>
-          <NavLink to="/services" activeStyle>
-            Services
-          </NavLink>
-          <NavLink to="/contact-us" activeStyle>
-            Contact Us
-          </NavLink>
-          <NavLink to="/sign-up" activeStyle>
-            Sign Up
-          </NavLink>
+          {
+            Links.map((link)=>link)
+          }
           {/* Second Nav */}
           {/* <NavBtnLink to='/sign-in'>Sign In</NavBtnLink> */}
         </NavMenu>

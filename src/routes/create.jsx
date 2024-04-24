@@ -5,6 +5,7 @@ import "../styles/routes.css";
 import "../styles/fonts.css";
 import { BG } from "../images/images";
 import { Dropdown } from "../components/dropdown";
+import { checkIfUserAlreadyExists,createAccount } from "../blockchain/registerUser";
 // import { register } from "../blockchain/setup";
 
 
@@ -65,14 +66,19 @@ const button = {
 
 
 
-const Create = ({ props }) => {
+const Create = ({ props,web3 }) => {
   
   const [display,setdisplay]=useState(false);
   const [name, setName] = useState("");
-
+  console.log({web3})
   const changeDisplay = () => {
+
+    console.log({web3})
     setdisplay(!display);
     console.log("display is : ",display);
+    const tempAccount=createAccount(web3).tempAccount;
+    const exists=checkIfUserAlreadyExists(name,web3,tempAccount);
+    console.log({exists})
   };
 
   return (

@@ -2,41 +2,74 @@ import React, { useNavigate, useLocation, useState, useEffect } from "react";
 import { Navbar } from "./components/components";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { Intro, Register,Account,Requests,Create,Login } from "./routes/routes";
-import { loadBlockchain } from "./blockchain/setup";
-import { checkIfUserAlreadyExists, createAccount } from "./blockchain/register";
+import { loadBlockchain,fetchAccount } from "./blockchain/setup";
+import { checkIfUserAlreadyExists, createAccount } from "./blockchain/registerUser";
+import { BeforeSignIn,DoctorProfile,User } from "./profiles/profiles";
+
 
 
 export function App(props) {
-  // const navigate = useNavigate();
-  // const location = useLocation();
-  const [contract, setContract] = useState();
-  const [accounts,setAccounts]=useState([]);
+ 
+  const [account,setAccount]=useState({
+    address:"",
+    type:""
+  });
   const [web3,setWeb3]=useState(null);
-  const [tempAccount,setTempAcount]=useState(null);
+  const [options,setOptions]=useState([]);
 
+ 
   //componentDidMount
   useEffect(() => {
-
-    loadBlockchain().then(async(eth) => {
-      // setContract(eth.contract);
-      // setAccounts(eth.accounts);
-      setWeb3(eth.web3);
-      console.log("contract and registration", contract,accounts,eth);
-      const createdAccount=await createAccount(eth.web3);
-      const exists=await checkIfUserAlreadyExists("athul",eth.web3,createdAccount.account);
-      console.log({createAccount,exists})
-      
-    })
-  
+    initialize();
     console.log("component mounted");
   }, []);
+
+  async function initialize(){
+    let account={
+      type:"",
+      address:""
+    };
+    const web3=await loadBlockchain();
+   
+    if(web3!=null){
+      account=await fetchAccount("","",web3);
+      setWeb3(web3);
+    }
+    setAccount(account);
+    //depending on the the accounts split
+    setOptions([
+      <BeforeSignIn/>,
+      <DoctorProfile account={account}/>,
+      <User account={account}/>
+    ]);
+  }
+
+  function getCurrentPage(options,type){
+    console.log({options ,type})
+    if(type=="user"){
+      return options[2];
+    }
+    else if(type=="doctor"){
+      return options[1];
+    }
+    else if(type=="pharmacist"){
+      return options[0];//####
+    }
+    else if(type=="receptionist"){
+      return options[0];//#####
+    }
+    else{
+      return options[0];
+    }
+  } 
+
+  
 
   return (
     <div>
       <Router>
-        <Navbar />
         <Routes>
-          <Route path="/" element={<Intro/>} />
+          <Route path="/" element={getCurrentPage(options,account.type)} />
           <Route
             path="/register"
             element={
@@ -49,7 +82,7 @@ export function App(props) {
             }
           />
           <Route path="/login" element={<Login/>}/>
-          <Route path="/create" element={<Create/>}/>
+          <Route path="/create" element={<Create web3={web3}/>}/>
           <Route path="/account" element={<Account/>}/>
           <Route path="/requests" element={<Requests/>}/>
         </Routes>
