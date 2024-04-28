@@ -1,0 +1,19 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap");
+
+@font-face {
+  font-family: "Littera Plain";
+  src: url("../fonts/LitteraPlainBold.woff") format("woff2"),
+    /* Modern Browsers */ url("../fonts/LitteraPlainBook.woff") format("woff2"),
+    url("../fonts/LitteraPlainLight.woff") format("woff2"),
+    url("../fonts/LitteraPlainMedium.woff") format("woff2"),
+    url("../fonts/LitteraPlainRegular.woff") format("woff2");
+  font-weight: normal;
+  font-style: normal;
+}
+
+
+
+
+
+@import url('https://fonts.googleapis.com/css2?family=PT+Sans:ital,wght@0,400;0,700;1,400;1,700&family=Sora:wght@100..800&display=swap')
+
