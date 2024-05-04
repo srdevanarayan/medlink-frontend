@@ -13,8 +13,6 @@
   flex-direction: column;
 }
 
-
-
 .button-rounded {
   width: 25px;
   border-radius: 50px;
@@ -43,4 +41,8 @@
   text-decoration: none; /* Remove underline */
   color: inherit; /* Inherit parent color */
   display: inherit; /* Inherit parent display property */
+}
+::placeholder {
+  color: #cacaca;
+  opacity: 1; /* Firefox */
 }

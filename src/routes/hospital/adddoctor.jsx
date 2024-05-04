@@ -1,19 +1,19 @@
 import React,{useState} from "react";
-import {Card,Button,Alert,Label,SearchBar} from "../../components/components";
+import {Card,CardButton,Alert,Label,SearchBar} from "../../components/components";
 import '../../styles/routes.css';
 import '../../styles/fonts.css';
 import { Dropdown } from "../../components/dropdown";
 
 
 const label = {
-    width: "auto%",
+    width: "70%",
     padding: "0.6em",
     fontSize: "1.1em",
     borderRadius: "0.4em",
-    border: " 0.1em solid #dc3845",
+    border: " 0.1em solid #17EFF4",
     opacity: 1,
     color: "black",
-    background: "rgba(255, 255, 255, 0.43)",
+    background: "#17EFF4"
   };
 
   const dropdownStyle={
@@ -22,37 +22,68 @@ const label = {
 
 
 const submitButtonStyle={
-    border:" none",
-    borderRadius:"0.4em",
     backgroundColor:"rgba(10,10,10,0.5)",
-    color:"white",
+    color:"#10B3A0",
     fontFamily: "'PT Sans', sans-serif",
     fontWeight: '400',
     fontStyle: 'normal',
     padding:"1em",
-    width:"50%",
+    width:"30%",
 };
+
+const textColor = {
+  color:"#17EFF4",
+  padding:"1rem",
+  display:"flex",
+  justifyContent:"center"
+}
+
+const cardstyle={
+  gap:"3em",
+  border: "1px solid #10B3A0",
+  borderRadius:"2em",
+  margin:"0% 25%"
+}
 
 const AddDoctor=({children})=>{
 
-    const [doctorname,setDoctorName]=useState("");
+    const [doctorname,setName]=useState("");
     const [dept,setDept]= useState("");
 
     return (
-        <div className="column-center" style={{gap:"3em",margin:"5em 2em", padding:"5em 13em"}}>
-           <Label
-            placeholderStyle="label"
-            type="text"
-            placeholder="Enter Doctor Username"
-            style={label}
-            onChange={(event)=>{
-              setDoctorName(event.target.value)
-            }}
-          />
-           <Dropdown style={dropdownStyle} options={[{value:"Department1",label:"department1"}]} defaultValue={"Select Department"}></Dropdown>
+        <div className="column-center" style={{gap:"3em",margin:"0em 2em", padding:"5em 13em"}}>
+          <Card className="column-center" style={cardstyle}>
+          <div style={textColor}><h2 >Add Doctor</h2></div>
+          <div className='row-center' style={{height:"39px",gap:"2%"}}>
+          <div style={{width:"50%",padding:"10px 0px"}}>
+          <label htmlFor="username" style={{color:"#17EFF4", padding:"20px 0px",height:"39px"}}>Doctor Username</label>
+          </div>
+        <Label
+          placeholderStyle="label"
+          type="text"
+          placeholder=""
+          style={label}
+          onChange={(event)=>{
+            setName(event.target.value)
+          }}
+        /></div>
+        <div className='row-center' style={{height:"39px",gap:"2%"}}>
+          <div style={{width:"50%",padding:"10px 0px"}}>
+          <label htmlFor="username" style={{color:"#17EFF4", padding:"20px 0px",height:"39px"}}>Department</label>
+          </div>
+        <Label
+          placeholderStyle="label"
+          type="text"
+          placeholder=""
+          style={label}
+          onChange={(event)=>{
+            setDept(event.target.value)
+          }}
+        /></div>
             <div style={{display:"flex",justifyContent:"center"}}>
-              <Button style={submitButtonStyle}>Add</Button>
+              <CardButton style={submitButtonStyle}>ADD</CardButton>
             </div>
+            </Card>
         </div>
     )
 }

@@ -1,39 +1,73 @@
-import React, { useNavigate, useLocation, useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Navbar } from "./components/components";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { Intro, Register,Account,Requests } from "./routes/routes";
+import { Intro, Register,Account,Requests, Create, TempAccount} from "./routes/routes";
 import { loadBlockchain } from "./blockchain/setup";
-// import { Tokens,History,Profile } from "./routes/patientapj/patient";
-import { AddDoctor,AddDept,PatientLog,Appointments,Slot,DashboardHospital } from "./routes/hospital/hospital";
-import { Appointment,FamilyEmrView,FamilyMembers,AppointmentView } from "./routes/patient/patient";
-import { Emr,FamilyEmr,EmrShare,EmrView,AppointmentDetails,DashboardPatient } from "./routes/patient/patient"; 
+import { AddDoctor,AddDept,PatientLog,Appointments,Slot,DashboardHospital,HospitalLogin } from "./routes/hospital/hospital";
+import { Appointment,FamilyEmrView,FamilyMembers,AppointmentView,PatientLogin } from "./routes/patient/patient";
+import { Emr,FamilyEmr,EmrShare,EmrView,AppointmentDetails,DashboardPatient } from "./routes/patient/patient";
+import { Admin, Blacklist, DashboardAdmin, Verify,VerifyDetails,Addhospital,Addhospitals, ResearcherReq } from "./routes/admin/admin";
+import { DoctorLogin,DashboardDoctor,PatientLogs,LogDetails,ApppointmentDoctor } from "./routes/doctor/doctor";
+import { DoctorAppointmentDetails,EmrDoctor,AppointmentGenerate } from './routes/doctor/doctor'
+import { setEncryptedPrivateKey } from "./contract_functions/admin_info";
+import { getData,setData } from "./storage/session";
+import { ResearcherLogin,DashboardResearcher,CreateRequest,PendingRequests,CompletedRequests } from "./routes/researcher/researcher";
+
+
+
 
 
 export function App(props) {
-  // const navigate = useNavigate();
-  // const location = useLocation();
-  const [contract, setContract] = useState();
-  const [accounts,setAccounts]=useState([]);
+ 
+  const [account,setAccount]=useState(null);
+  const [web3,setWeb3]=useState(null);
+  const [options,setOptions]=useState([]);
 
+
+  function updateAccount(accountData){
+    console.log('account',accountData)
+    setAccount(accountData);
+  }
+ 
   //componentDidMount
   useEffect(() => {
-    loadBlockchain().then((eth) => {
-      setContract(eth.contract);
-      setAccounts(eth.accounts);
-      console.log("contract and registration", contract,accounts);
-    });
-
+    initialize();
     console.log("component mounted");
   }, []);
 
+  useEffect(()=>{
+
+  },[account])
+
+
+
+  async function initialize(){
+    const checkStatus=getData('status')
+    if(checkStatus=='undefined'||checkStatus==undefined||checkStatus==null){
+      const _web3=await loadBlockchain();
+      if(_web3!=null){
+        setWeb3(_web3);
+        await setEncryptedPrivateKey(_web3,'password') 
+      }
+      setData('status','initialized')
+      console.log('web3 initialized')
+    }
+  }
+
+
+
+  
+
   return (
-    <div>
+    <div >
+
       <Router>
         <Navbar />
         <Routes>
           <Route path="/" element={<Intro />} />
-          <Route path="/register" element = {<Register
-                props={{contract: contract, accounts:accounts}}/>}/>
+          <Route path="/create-account" element={<Create web3={web3} tempAccount={account} setAccount={updateAccount} />} />
+          <Route path="/register" element = {<Register web3={web3} account={account}
+                props={{contract: null}}/>}/>
           <Route path="/account" element={<Account/>}/>
           <Route path="/requests" element={<Requests/>}/>
 
@@ -42,7 +76,10 @@ export function App(props) {
           <Route path="/tokens" element={<Tokens/>}/> 
           <Route path="/profile" element={<Profile/>}/>*/}
 
+          <Route path="/temp" element={<TempAccount web3={web3}/>}/> 
+
           {/** HOSPITAL ROUTING */}
+          <Route path="/hospital" element={<HospitalLogin/>}/>
           <Route path="/hospital/dashboard" element={<DashboardHospital/>}/>
           <Route path="/adddoctor" element={<AddDoctor/>}/>
           <Route path="/adddepartment" element={<AddDept/>}/>
@@ -51,6 +88,7 @@ export function App(props) {
           <Route path="/appointments/slot" element={<Slot/>}/>
 
           {/** PATIENT ROUTING */}
+          <Route path="/patient" element={<PatientLogin/>}/>
           <Route path="/patient/dashboard" element={<DashboardPatient/>}/>
           <Route path="/familymembers" element={<FamilyMembers/>}/>
           <Route path="/appointment" element={<Appointment/>}/>
@@ -63,9 +101,31 @@ export function App(props) {
           <Route path="/appointment/details" element={<AppointmentDetails/>}/>
 
           {/** DOCTOR ROUTING */}
-
+          <Route path="/doctor" element={<DoctorLogin/>}/>
+          <Route path="/doctor/dashboard" element={<DashboardDoctor/>}/>
+          <Route path="/doctor/patientlogs" element={<PatientLogs/>}/>
+          <Route path="/patientlogs/details" element={<LogDetails/>}/>
+          <Route path="/doctor/appointment" element={<ApppointmentDoctor/>}/>
+          <Route path="/doctor/appointment/details" element={<DoctorAppointmentDetails/>}/>
+          <Route path="/doctor/appointment/generate" element={<AppointmentGenerate/>}/>
+          <Route path="/doctor/emr" element={<EmrDoctor/>}/>
 
           {/** ADMIN ROUTING */}
+          <Route path="/admin" element={<Admin/>}/>
+          <Route path="/admin/dashboard" element={<DashboardAdmin/>}/>
+          <Route path="/verify" element={<Verify/>}/>
+          <Route path="/verifydetails" element={<VerifyDetails/>}/>
+          <Route path="/blacklist" element={<Blacklist/>}/>
+          <Route path="/addhospital" element={<Addhospital/>}/>
+          <Route path="/addhospitalusername" element={<Addhospitals/>}/>
+          <Route path="/admin/researcher" element={<ResearcherReq/>}/>
+
+          {/** RESEARCHER ROUTING */}
+          <Route path="/researcher" element={<ResearcherLogin/>}/>
+          <Route path="/researcher/dashboard" element={<DashboardResearcher/>}/>
+          <Route path="/researcher/createrequest" element={<CreateRequest/>}/>
+          <Route path="/researcher/pending" element={<PendingRequests/>}/>
+          <Route path="/researcher/completed" element={<CompletedRequests/>}/>
         </Routes>
       </Router>
     </div>
@@ -73,3 +133,5 @@ export function App(props) {
 }
 
 export default App;
+
+

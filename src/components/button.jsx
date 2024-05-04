@@ -14,16 +14,25 @@ const theme = {
 };
 
 const ButtonStyle = styled.button`
+  height: 36px;
+  fontSize: 1em;
+  width: 8em;
+  padding: 20px;
+  color: #10B3A0;
   outline: 0;
   margin: 10px 0px;
+  border: 2px solid #10B3A0;
+  border-radius: 2em;
   cursor: pointer;
+  background-color: rgba(10,10,10,0.5);
   transition: ease background-color 250ms;
   &:hover {
-    // background-color: ${(props) => theme[props.theme].hover};
+    color: #000000;
+    background-color: #10B3A0;
   }
   &:disabled {
     cursor: default;
-    opacity: 0.7;
+    opacity: 0.5;
   }
 `;
 
@@ -36,7 +45,7 @@ function clickMe() {
 }
 
 const ButtonToggle = styled(ButtonStyle)`
-  opacity: 0.7;
+  opacity: 1;
   ${({ active }) =>
     active &&
     `
@@ -46,14 +55,105 @@ const ButtonToggle = styled(ButtonStyle)`
 
 function Button({ children, style,className,onClick,type}) {
   return (
-    <ButtonStyle type={type} className={className} style={style} onClick={onClick}>
+    <ButtonStyle type={type} className={className} style={{}} onClick={onClick}>
       {children}
     </ButtonStyle>
   );
 }
 
+const CardStyle = styled.button`
+  height: 100%;
+  fontSize: 1.5em;
+  font-weight:900;
+  width: 20%;
+  padding: 12px;
+  color: #10B3A0;
+  outline: 0;
+  margin: 5px 0px;
+  border: 2px solid #10B3A0;
+  border-radius: 2.5em;
+  cursor: pointer;
+  background-color: rgba(0,0,0,1);
+  transition: ease background-color 250ms;
+  &:hover {
+    color: #000000;
+    background-color: #10B3A0;
+  }
+  &:disabled {
+    cursor: default;
+    opacity: 0.5;
+  }
+`;
+
+function CardButton({onClick, children}){
+  return (
+    <CardStyle type="submit" onClick={onClick}>{children}</CardStyle>
+  );
+}
+
+
+const BigButtonStyle = styled.button`
+  height: 100%;
+  fontSize: 1.5em;
+  font-weight:900;
+  width: 50%;
+  padding: 12px;
+  color: #10B3A0;
+  outline: 0;
+  margin: 10px 0px;
+  border: 2px solid #10B3A0;
+  border-radius: 2.5em;
+  cursor: pointer;
+  background-color: rgba(10,10,10,0.5);
+  transition: ease background-color 250ms;
+  &:hover {
+    color: #000000;
+    background-color: #10B3A0;
+  }
+  &:disabled {
+    cursor: default;
+    opacity: 0.5;
+  }
+`;
+
+function BigButton({onClick, children}){
+  return (
+    <BigButtonStyle type="submit" onClick={onClick}>{children}</BigButtonStyle>
+  );
+}
+
+const FullButtonStyle = styled.button`
+  height: 100%;
+  fontSize: 1.5em;
+  font-weight:900;
+  width: 100%;
+  padding: 12px;
+  color: #10B3A0;
+  outline: 0;
+  margin: 10px 0px;
+  border: 2px solid #10B3A0;
+  border-radius: 2.5em;
+  cursor: pointer;
+  background-color: rgba(10,10,10,0.5);
+  transition: ease background-color 250ms;
+  &:hover {
+    color: #000000;
+    background-color: #10B3A0;
+  }
+  &:disabled {
+    cursor: default;
+    opacity: 0.5;
+  }
+`;
+
+function FullSizeButton({onClick, children}){
+  return (
+    <FullButtonStyle type="submit" onClick={onClick}>{children}</FullButtonStyle>
+  );
+}
+
 const Tab = styled.button`
-  padding: 10px 100px;
+  padding: 10px 30px;
   cursor: pointer;
   opacity: 0.6;
   background: white;
@@ -132,4 +232,4 @@ function TextButton({children,style}){
 }
 
 
-export { Button, ToggleGroup, TabGroup ,TextButton};
+export { FullSizeButton,BigButton, CardButton, Button, ToggleGroup, TabGroup ,TextButton};

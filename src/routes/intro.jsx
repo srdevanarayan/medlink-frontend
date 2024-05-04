@@ -3,14 +3,32 @@ import { Link } from "react-router-dom";
 import { Logo, BG } from "../images/images";
 import { Button } from "../components/components";
 import "../styles/routes.css";
+import Dashboard from './admin/dashboard'
+import Verify from './admin/verify'
+import Blacklist from './admin/blacklist'
 
+
+///
+
+
+/// 
+const button = {
+  // height: "1.2em",
+  // fontSize: "1.1em",
+  // width: "10em",
+  // padding: "1.5em",
+  // color: "#10B3A0",
+
+};
 const Intro = () => {
   return (
+
+
     <div
       className="initialPage"
       style={{
         width: "100vw",
-        height: "90vh",
+        height: "calc(95vh - 20px)",
         backgroundImage: `url(${BG})`,
         backgroundSize: "cover",
         backgroundRepeat: "no-repeat",
@@ -34,19 +52,21 @@ const Intro = () => {
 
         <div className="tag-line">
           <div className="button-head row-center" style={{ gap: "1em" }}>
-            <div className="login">
-              <Button
-                text="LOGIN"
-                style={{ width: "auto", backgrround: "transparent" }}
-              />
-            </div>
+          <Link
+              style={{ textDecoration: "none", color: "inherit" }}
+              to="/login"
+            >
+            <Button className={`button-rounded`} style={button}>
+              LOGIN
+            </Button>
+           </Link>
             <Link
               style={{ textDecoration: "none", color: "inherit" }}
-              to="/register"
+              to="/create-account"
             >
-              <div className="register">
-                <Button text="REGISTER" style={{ width: "auto" }} />
-              </div>
+              <Button className={`button-rounded`} style={button}>
+                REGISTER
+              </Button>
             </Link>
           </div>
         </div>

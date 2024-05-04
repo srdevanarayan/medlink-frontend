@@ -3,21 +3,22 @@ import axios from "axios";
 import FormData from "form-data";
 import fs from "node:fs";
 
+
+//for sending sendFile(e.target.file[0])
 export async function sendFile(file) {
     
     const ipfs=await pinFileToIPFS(file);
     const hash=ipfs.IpfsHash;
-    console.log(ipfs,hash);
    
     return hash;
 }
 
 
 
-
+//modify 
 export function retriveFile(hash){
 
-    const link='https://emerald-large-fox-579.mypinata.cloud/ipfs/'+hash;
+  const link='https://emerald-large-fox-579.mypinata.cloud/ipfs/'+hash;
 }
 
 
@@ -69,4 +70,3 @@ const pinFileToIPFS = async (file) => {
       return null;
     }
 }
-

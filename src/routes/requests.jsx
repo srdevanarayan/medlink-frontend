@@ -2,7 +2,7 @@ import React,{useState} from "react";
 import {Card,Button,Alert,Label,SearchBar} from "../components/components";
 import "../styles/routes.css"
 import "../styles/fonts.css"
-import { getPath, sendFile } from "../ipfs/ipfs";
+import { sendFile } from "../ipfs/ipfs";
 
 
 const submitButtonStyle={

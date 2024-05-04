@@ -1,7 +1,5 @@
 import React from "react";
 import "../styles/routes.css";
-import "../styles/components.css"
-
 
 export const Label = ({
   children,

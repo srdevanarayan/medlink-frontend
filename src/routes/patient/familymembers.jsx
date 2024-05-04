@@ -1,5 +1,5 @@
 import React,{useState} from "react";
-import {Card,Button,Alert,Label,SearchBar} from "../../components/components";
+import {CardButton,Alert,Label,SearchBar} from "../../components/components";
 import '../../styles/routes.css';
 import '../../styles/fonts.css';
 
@@ -8,35 +8,53 @@ import '../../styles/fonts.css';
 const label = {
     width: "70%",
     fontSize: "1.1em",
-    borderRadius:"0",
-    border: " 3px solid #dc3845",
+    borderRadius:"2em",
+    border: " 3px solid #10B3A0",
     opacity: 1,
-    color: "black",
-    background: "rgba(255, 255 , 255, 0.43)",
+    color: "#17EFF4",
+    background: "rgba(10,10,10,0.5)",
   };
 
 const tableStyle = {
     border: "1px solid black",
-    borderCollapse: "collapse",
+    borderCollapse: "separate",
     width:"100%"
 };
 
 const submitButtonStyle = {
     width:"30%",
-    border:" none",
-    borderRadius:"0.5em",
     backgroundColor:"rgba(1, 1 , 1, 0.43)",
-    color:"white",
+    color:"#10B3A0",
     fontFamily: "'PT Sans', sans-serif",
     fontWeight: '400',
     fontStyle: 'normal',
     padding:"1em"
 };
 
+const tableRowStyle={
+    padding:"1em 3em",
+    width:"20%",
+    border: "1px solid #10B3A0",
+    borderCollapse: "separate",
+    borderRadius: "5em",
+    margin:"10% 20%",
+    color: "#10B3A0"
+}
+
+const tableContentStyle={
+    padding:"0em 1em",
+    border: "1px solid #10B3A0",
+    borderCollapse: "separate",
+    borderRadius: "1em",
+    margin:"10% 20%",
+    color:"black",
+    backgroundColor:"#10B3A0"
+}
+
 const FamilyMembers=({children})=>{
 
 const [name,setName]=useState("");
-const [memberdata,setMemberdata]=useState(["user1","user2","user3","user1","user2","user3"]);
+const [memberdata,setMemberdata]=useState([]);
 
 function submit(e,name){
     setMemberdata((memberdata)=>[...memberdata,name])
@@ -55,19 +73,26 @@ function submit(e,name){
               setName(event.target.value);
             }}
           />
-           <Button  style={submitButtonStyle} onClick={(e)=>{submit(e,name);}}>Add to access list</Button>
+           <CardButton  style={submitButtonStyle} onClick={(e)=>{submit(e,name);}}>ADD TO ACCESS LIST</CardButton>
             </div>
             <div style={{margin:"1em"}}>
                 <table style={tableStyle}>
                     <tr style={tableStyle}>
-                        <th style={{padding:"1em 5em",width:"50%",border: "1px solid black",borderCollapse: "collapse"}} >Username</th>
-                        <th style={{padding:"1em 5em",width:"50%"}}>Actions</th>
+                        <th style={tableRowStyle} >Username</th>
+                        <th style={tableRowStyle}>Actions</th>
                     </tr>
                     {
                     memberdata?.map((name,key)=>{
-                    return(<tr>
-                        <td style={{border: "1px solid black",borderCollapse: "collapse",padding:"0em 1em"}}>{name}</td>
-                        <td style={{border: "1px solid black",borderCollapse: "collapse",padding:"0em 5em"}}><Button>Remove</Button></td>
+                    return(<tr style={tableContentStyle}>
+                        <td >{name}</td>
+                        <td style={{
+                                    padding:"0em 1em",
+                                    borderCollapse: "separate",
+                                    borderRadius: "1em",
+                                    color:"10B3A0",
+                                    justifyContent:"center",
+                                    display:"flex"
+                                }}><CardButton>REMOVE</CardButton></td>
                     </tr>);})}
                 </table>
             </div>
